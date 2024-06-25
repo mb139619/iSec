@@ -244,7 +244,7 @@ collateralAmount = st.number_input("Collateral Amount", min_value = 0, step = 10
 
 trancheNum = st.slider("Set the tranches number" , min_value = 2, max_value = 5, step = 1)
 
-rwTable = pd.read_excel(".vscode\RWtableSECSA.xlsx")
+rwTable = pd.read_excel(".RWtableSECSA.xlsx")
 
 underlyingTypology = st.selectbox(label = "Select Underlying typology", options=rwTable["DEAL_TYPE"])
 
