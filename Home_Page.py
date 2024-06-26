@@ -7,7 +7,7 @@ import matplotlib.ticker as mtick
 
 st.set_page_config(page_title="Multipage App", page_icon="Casa")
 
-st.title("iSECuritisation")
+st.title("iSEC")
 st.sidebar.success("Select a page above.")
 
 multi = """This tool executes the calculation of Risk-Weights (RWs) for securitisation exposure under two key methodologies: *Standardized Approach for Credit Risk - Standardized Approach* (***SEC-SA***) and *Standardized Approach for Credit Risk - External Ratings-Based Approach* (***SEC-ERBA***), in compliance with the industry regulations set out in the Capital Requirements Regulation (CRR).
