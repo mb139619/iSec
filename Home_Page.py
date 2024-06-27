@@ -155,7 +155,7 @@ if trancheNum == 4:
 submit = st.button("Submit")
 
 if submit:
-    st.switch_page("pages\1_📙_Attachment_and_Detachment_Points.py")
+    st.switch_page("pages/1_📙_Attachment_and_Detachment_Points.py")
 
 
 # salvataggio degli input
