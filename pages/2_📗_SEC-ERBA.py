@@ -182,6 +182,18 @@ try:
             },
         )
 
+        # ricalcolo seniority
+        for key in secRW.keys():
+            if (key == "Mezzanine") or (key == "Mezzanine1") or (key == "Mezzanine2"):
+                if secRW[key] < 25:
+                    st.markdown(
+                        "WARNING: the risk weight for the mezzanine tranche should be recalculated by classifying the tranche as senior"
+                    )
+                if secRW[key] == 1250:
+                    st.markdown(
+                        "WARNING: the risk weight for the mezzanine tranche should be recalculated by classifying the tranche as junior"
+                    )
+
         # grafico RW
         palette = sns.color_palette("Greens_r")
 

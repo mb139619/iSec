@@ -91,7 +91,7 @@ with st.form("SecProperties"):
     with c2:
 
         st.text("Tranche Amount")
-
+        amount = 0
         for i in range(0, trancheNum):
             amount_dict[i] = st.number_input(
                 f"Tranche {i+1} Amount",
@@ -99,6 +99,7 @@ with st.form("SecProperties"):
                 step=1000,
                 label_visibility="hidden",
             )
+            amount = amount + amount_dict[i]
 
     if trancheNum == 4:
         paymentType = st.radio(
@@ -119,7 +120,6 @@ with st.form("SecProperties"):
 
     submitted = st.form_submit_button("Save properties")
 
-
 propertiesDict = {}
 
 for el1, el2 in zip(seniority_dict.values(), amount_dict.values()):
@@ -129,8 +129,36 @@ propertiesDict = propertiesMapper(
     tranches=trancheNum, propertiesDictionary=propertiesDict
 )
 
+if amount != collateralAmount:
+    st.markdown(
+        "WARNING! The total amounts of the tranches must be equal to the collateral"
+    )
+
+if len(set(propertiesDict.keys())) != trancheNum:
+    if trancheNum == 2:
+        st.markdown("WARNING: At least one senior and junior tranche must be included")
+    else:
+        st.markdown(
+            "WARNING: At least one senior, mezzanine and junior tranche must be included"
+        )
+
+if trancheNum == 4:
+    check = 0
+    for i in list(propertiesDict.keys()):
+        if i == "Junior":
+            check = 1
+    if check == 0:
+        st.markdown(
+            "WARNING: At least one senior, mezzanine and junior tranche must be included"
+        )
 
 submit = st.button("Submit")
+
+if submit:
+    st.switch_page(
+        r"C:\Users\cp.382\Desktop\iSec_v2\iSec\pages\1_📙_Attachment_and_Detachment_Points.py"
+    )
+
 
 # salvataggio degli input
 

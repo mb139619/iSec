@@ -174,6 +174,7 @@ try:
         c1, c2, c3 = st.columns(3)
 
         with c1:
+            EAD_tot = 0
 
             for i in range(0, num_subpool, 1):
                 EAD[i] = (
@@ -182,9 +183,14 @@ try:
                         min_value=0.00,
                         value=0.00,
                         max_value=100.00,
+                        step=1.00,
                     )
                     / 100
                 )
+                EAD_tot = EAD_tot + EAD[i]
+                # controllo EAD
+            if EAD_tot != 1:
+                st.markdown("WARNING: Sum of Exposure At Default % (EAD%) must be 100%")
 
         with c2:
 
@@ -195,6 +201,7 @@ try:
                         min_value=0.00,
                         value=0.00,
                         max_value=100.00,
+                        step=1.00,
                     )
                     / 100
                 )
@@ -212,6 +219,7 @@ try:
                 min_value=0.00,
                 value=0.00,
                 max_value=100.00,
+                step=1.00,
             )
             / 100
         )
@@ -229,10 +237,6 @@ try:
     attachAmounts = pd.DataFrame([attachAmounts], index=["Attachment Point"])
     detachAmounts = pd.DataFrame([detachAmounts], index=["Detachment Point"])
     adAmounts = pd.concat([attachAmounts, detachAmounts])
-
-    st.markdown(
-        "Below you can see the table and graph of the risk weights calculated for each individual tranche:"
-    )
 
     # gestione dei subpool per il calcolo della media pesata del RWstd
     RWstd = np.empty(num_subpool)
@@ -288,6 +292,22 @@ try:
     # calcolo RW
     secRW = SEC_SA_RW(
         secType, A, D, DI, W, EAD, num_subpool, RW_ptf, underlyingTypology
+    )
+
+    # ricalcolo seniority
+    for key in secRW.keys():
+        if (key == "Mezzanine") or (key == "Mezzanine1") or (key == "Mezzanine2"):
+            if secRW[key] < 25:
+                st.markdown(
+                    "WARNING: the risk weight for the mezzanine tranche should be recalculated by classifying the tranche as senior"
+                )
+            if secRW[key] == 1250:
+                st.markdown(
+                    "WARNING: the risk weight for the mezzanine tranche should be recalculated by classifying the tranche as junior"
+                )
+
+    st.markdown(
+        "Below you can see the table and graph of the risk weights calculated for each individual tranche:"
     )
 
     # tabella RW
