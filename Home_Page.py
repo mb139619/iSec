@@ -154,9 +154,6 @@ if trancheNum == 4:
 
 submit = st.button("Submit")
 
-if submit:
-    st.switch_page("pages/1_📙_Attachment_and_Detachment_Points.py")
-
 
 # salvataggio degli input
 
@@ -170,3 +167,4 @@ if submit:
     st.session_state["Attachment"] = []
     st.session_state["Detachment"] = []
     st.session_state["Seniority dict"] = seniority_dict
+    st.switch_page("pages/1_📙_Attachment_and_Detachment_Points.py")
